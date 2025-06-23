@@ -9,9 +9,15 @@ This project provides a Docker Compose setup for a full-stack application. It ha
 ├── docker-compose.yml
 ├── backend/
 │   ├── Dockerfile
+│   ├── main.py
+│   ├── requirements.txt
+│   └── src/
+│          ├── __init____.py
+│          ├── database.py
+│          └── models.py
+├── db/
 │   ├── gapminder.csv
-│   └── main.py
-│   └── requirements.txt
+│   └── init.sql
 └── frontend/
     ├── Dockerfile
     ├── package.json
@@ -31,6 +37,7 @@ This project provides a Docker Compose setup for a full-stack application. It ha
 
 ## Features
 
+- **Database**: Postgres server that loads in the gapminder dataset
 - **Backend**: FastAPI serving a synthesized Gapminder dataset with country development metrics
 - **Frontend**: Next.js with TypeScript that renders some of the dataset.
 - **Development Environment**:
@@ -77,4 +84,5 @@ Both frontend and backend directories are mounted as volumes, so any changes you
 
 - **Backend**: FastAPI, Python
 - **Frontend**: Next.js, TypeScript, Recharts
+- **Database**: Postgres
 - **Infrastructure**: Docker, Docker Compose

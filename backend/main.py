@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
+from sqlalchemy.orm import Session
+from src.database import get_db
+from src.models import GapminderData
 
 app = FastAPI()
 
@@ -18,5 +20,16 @@ async def root():
     return {"status": "Ready"}
 
 @app.get("/api/gapminder")
-async def get_electives():
-    return pd.read_csv("./gapminder.csv").to_dict(orient="records")
+async def get_gapminder_data(db: Session = Depends(get_db)):
+    data = db.query(GapminderData).all()
+    return [
+        {
+            "country": item.country,
+            "continent": item.continent,
+            "year": item.year,
+            "lifeExp": item.life_exp,
+            "pop": item.pop,
+            "gdpPercap": item.gdp_per_cap
+        }
+        for item in data
+    ]
